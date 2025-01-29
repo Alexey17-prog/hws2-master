@@ -1,19 +1,18 @@
-import React, { useState } from 'react'
-import s from './Stand.module.css'
-import SuperInputText from './common/c1-SuperInputText/SuperInputText'
-import SuperCheckbox from './common/c3-SuperCheckbox/SuperCheckbox'
-import SuperButton from './common/c2-SuperButton/SuperButton'
+import React, { useState } from 'react';
+import s from './Stand.module.css';
+import SuperInputText from './common/c1-SuperInputText/SuperInputText';
+import SuperCheckbox from './common/c3-SuperCheckbox/SuperCheckbox';
+import SuperButton from './common/c2-SuperButton/SuperButton';
 
 const Stand = () => {
-    const [stateForAllInputs, setValue] = useState<string>('')
-    const [error, setError] = useState<string>('')
-
-    const [stateForAllCheckboxes, setChecked] = useState<boolean>(false)
+    const [stateForAllInputs, setValue] = useState<string>('');
+    const [error, setError] = useState<string>('');
+    const [stateForAllCheckboxes, setChecked] = useState<boolean>(false);
 
     return (
         <div id={'hw4-stand'} className={s.stand}>
             <div className={s.inputs}>
-                {/*совместим со старым кодом:*/}
+                {/* Input that works with old code */}
                 <div>
                     <SuperInputText
                         id={'hw4-super-input-like-old'}
@@ -21,7 +20,7 @@ const Stand = () => {
                         onChange={(e) => setValue(e.currentTarget.value)}
                     />
                 </div>
-                {/*инпут с ошибкой:*/}
+                {/* Input with error handling */}
                 <div>
                     <SuperInputText
                         id={'hw4-super-input-with-error'}
@@ -29,31 +28,27 @@ const Stand = () => {
                         onChangeText={setValue}
                         error={error}
                         onEnter={() => {
-                            setError(
-                                stateForAllInputs.trim()
-                                    ? ''
-                                    : 'Error'
-                            )
-                            setValue('')
+                            setError(stateForAllInputs.trim() ? '' : 'Error');
+                            setValue('');
                         }}
                     />
                 </div>
             </div>
 
             <div className={s.buttons}>
-                {/*обычная кнопка:*/}
+                {/* Default button */}
                 <div>
                     <SuperButton id={'hw4-super-button-default'}>
                         default
                     </SuperButton>
                 </div>
-                {/*красная кнопка:*/}
+                {/* Red button */}
                 <div>
                     <SuperButton id={'hw4-super-button-red'} xType={'red'}>
                         red
                     </SuperButton>
                 </div>
-                {/*задизэйбленная кнопка:*/}
+                {/* Disabled button */}
                 <div>
                     <SuperButton
                         id={'hw4-super-button-disabled'}
@@ -63,7 +58,7 @@ const Stand = () => {
                         disabled
                     </SuperButton>
                 </div>
-                {/*задизэйбленная кнопка:*/}
+                {/* Secondary button */}
                 <div>
                     <SuperButton
                         id={'hw4-super-button-secondary'}
@@ -75,7 +70,7 @@ const Stand = () => {
             </div>
 
             <div className={s.checkboxes}>
-                {/*чекбокс с текстом:*/}
+                {/* Checkbox with text */}
                 <div>
                     <SuperCheckbox
                         id={'hw4-super-checkbox-with-text'}
@@ -85,7 +80,7 @@ const Stand = () => {
                         some text
                     </SuperCheckbox>
                 </div>
-                {/*совместим со старым кодом:*/}
+                {/* Checkbox compatible with old code */}
                 <div>
                     <SuperCheckbox
                         id={'hw4-super-checkbox-like-old'}
@@ -98,4 +93,4 @@ const Stand = () => {
     )
 }
 
-export default Stand
+export default Stand;

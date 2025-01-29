@@ -1,24 +1,29 @@
-import React, {useEffect, useRef, useState} from 'react'
-import { message0 } from '../HW1'
+import React, { useEffect, useRef, useState } from 'react';
+import {message0, MessageType} from '../HW1';
 import s from './MessageSender.module.css'
 
-// компонента, которая тестирует вашу компоненту (не изменять, any не трогать)
-const MessageSender = (props: any) => {
-    const M = props.M
-    const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-    const [messages, setMessages] = useState<any[]>([])
-    const [text, setText] = useState<any>('')
+// Определяем интерфейс для пропсов
+interface MessageSenderProps {
+    M: React.ComponentType<{ message: MessageType }>; // Компонент для отображения сообщения
+}
 
-    const onChange = (e: any) => {
-        setText(e.currentTarget.value)
-    }
+// Компонент, который тестирует вашу компоненту (не изменять)
+const MessageSender: React.FC<MessageSenderProps> = (props) => {
+    const M = props.M;
+    const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+    const [messages, setMessages] = useState<MessageType[]>([]);
+    const [text, setText] = useState<string>('');
+
+    const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setText(e.currentTarget.value);
+    };
 
     useEffect(() => {
-        if (textareaRef?.current) {
-            textareaRef.current.style.height = '0px'
-            textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px'
+        if (textareaRef.current) {
+            textareaRef.current.style.height = '0px';
+            textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
         }
-    }, [text])
+    }, [text]);
 
     const addMessage = () => {
         setMessages([
@@ -31,13 +36,15 @@ const MessageSender = (props: any) => {
                     time: new Date().toTimeString().slice(0, 5),
                 },
             },
-        ])
-        setTimeout(() => setText(''), 4)
-    }
+        ]);
+        setTimeout(() => setText(''), 4);
+    };
 
-    const onKeyDown = (e: any) => {
-        e.key === 'Enter' && e.shiftKey && addMessage()
-    }
+    const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.key === 'Enter' && e.shiftKey) {
+            addMessage();
+        }
+    };
 
     return (
         <>
@@ -50,27 +57,22 @@ const MessageSender = (props: any) => {
                     id={'hw1-textarea'}
                     className={s.textarea}
                     ref={textareaRef}
-
                     title={'Shift+Enter for send'}
                     placeholder={'Type your message'}
                     value={text}
-
                     onChange={onChange}
                     onKeyDown={onKeyDown}
                 />
                 <button
                     id={'hw1-button'}
                     className={s.button}
-
                     onClick={addMessage}
                 >
-                    {/*текст кнопки могут изменить студенты*/}
                     Send
-                    {/**/}
                 </button>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default MessageSender
+export default MessageSender;

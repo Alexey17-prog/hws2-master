@@ -2,44 +2,50 @@ import React, {
     SelectHTMLAttributes,
     DetailedHTMLProps,
     ChangeEvent,
-} from 'react'
-import s from './SuperSelect.module.css'
+} from 'react';
+import s from './SuperSelect.module.css';
 
 type DefaultSelectPropsType = DetailedHTMLProps<
     SelectHTMLAttributes<HTMLSelectElement>,
     HTMLSelectElement
->
+>;
 
 type SuperSelectPropsType = DefaultSelectPropsType & {
-    options?: any[]
-    onChangeOption?: (option: any) => void
-}
+    options?: { id: number; value: string }[]; // Уточняем тип опций
+    onChangeOption?: (option: any) => void;
+};
 
 const SuperSelect: React.FC<SuperSelectPropsType> = ({
-    options,
-    className,
-    onChange,
-    onChangeOption,
-    ...restProps
-}) => {
+                                                         options,
+                                                         className,
+                                                         onChange,
+                                                         onChangeOption,
+                                                         ...restProps
+                                                     }) => {
     const mappedOptions: any[] = options
         ? options.map((o) => (
-              <option
-                  id={'hw7-option-' + o.id}
-                  className={s.option}
-                  key={o.id}
-                  value={o.id}
-              >
-                  {o.value}
-              </option>
-          ))
-        : [] // map options with key
+            <option
+                id={'hw7-option-' + o.id}
+                className={s.option}
+                key={o.id}
+                value={o.id} // Используем id как значение
+            >
+                {o.value} // Отображаемое значение
+            </option>
+        ))
+        : [];
 
     const onChangeCallback = (e: ChangeEvent<HTMLSelectElement>) => {
-        // делают студенты
-    }
+        const selectedValue = e.target.value; // Получаем выбранное значение
+        if (onChangeOption) {
+            onChangeOption(selectedValue); // Вызываем колбек с выбранным значением
+        }
+        if (onChange) {
+            onChange(e); // Вызываем стандартный обработчик, если он передан
+        }
+    };
 
-    const finalSelectClassName = s.select + (className ? ' ' + className : '')
+    const finalSelectClassName = s.select + (className ? ' ' + className : '');
 
     return (
         <select
@@ -49,7 +55,7 @@ const SuperSelect: React.FC<SuperSelectPropsType> = ({
         >
             {mappedOptions}
         </select>
-    )
-}
+    );
+};
 
-export default SuperSelect
+export default SuperSelect;
